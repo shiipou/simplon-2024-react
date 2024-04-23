@@ -3,8 +3,9 @@ import Feed from "../Components/Feed"
 import Navigation from "../Components/Navigation"
 import { getNewestPost, getPostById, getTrendingPost } from "../Services/postApi"
 import PostCard from "../Components/PostCard"
+import { Link } from "react-router-dom"
 
-export default function FeedPage() {
+export default function FeedPage({user}) {
     const [currentFeed, setCurrentFeed] = useState("trendings")
 
     const [postId, setPostId] = useState(null)
@@ -36,6 +37,7 @@ export default function FeedPage() {
     }
     return (
         <div>
+            {user ? <div>Bonjour {user.pseudo}</div> : <Link to="/login" >Connexion</Link>}
             {postEl}
             {/* {post && (<div>
                 <PostCard id={post?.id} owner={post?.owner} content={post?.content} />
