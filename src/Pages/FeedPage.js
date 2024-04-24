@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Feed from "../Components/Feed"
 import Navigation from "../Components/Navigation"
 import { getNewestPost, getPostById, getTrendingPost } from "../Services/postApi"
@@ -10,24 +10,26 @@ export default function FeedPage({user}) {
 
     const [postId, setPostId] = useState(null)
 
+    const [posts, setPosts] = useState([])
+
+    useEffect(()=>{
+        let feedFetcher = getTrendingPost
+        if(currentFeed == 'newest'){
+            feedFetcher = getNewestPost
+        }
+        feedFetcher().then((posts)=>{
+            setPosts(posts)
+        })
+    }, [currentFeed])
+
     const onPostSelect = (id)=> {
         setPostId(id)
     }
 
-    let feedEl
-    if(currentFeed === 'newest') {
-        feedEl = <Feed 
-            feedType="Newest" 
-            feedContent={getNewestPost()}
-            onPostSelect={onPostSelect}/>
-    } else {
-        feedEl = <Feed 
-            feedType="Trendings" 
-            feedContent={getTrendingPost()} 
-            onPostSelect={onPostSelect}/>
+    let post
+    if(postId) {
+        post = getPostById(postId)
     }
-
-    const post = getPostById(postId)
 
     let postEl
     if(post) {
@@ -44,10 +46,19 @@ export default function FeedPage({user}) {
             </div>)} */}
             <Navigation
                 currentFeed={currentFeed}
-                onTrendingClick={()=>{ setCurrentFeed("trendings") }}
-                onNewestClick={()=> { setCurrentFeed("newest") }}
+                onTrendingClick={()=>{ 
+                    setPosts([])
+                    setCurrentFeed("trendings")
+                }}
+                onNewestClick={()=> {
+                    setPosts([])
+                    setCurrentFeed("newest")
+                }}
             />
-            {feedEl}
+            <Feed 
+                feedType={currentFeed}
+                feedContent={posts}
+                onPostSelect={onPostSelect}/>
         </div>
     )
 }
