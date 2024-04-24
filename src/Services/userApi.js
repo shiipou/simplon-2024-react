@@ -1,9 +1,30 @@
-const users = [{id:1, pseudo:'test', password: 'Test', email: 'test@email.com'},{id:2, pseudo:'user', password: 'Test', email: 'test2@example.com'}]
+import { baseApi } from "./_apiConfig"
 
-export function getUserById(id) {
-    return users.find((user)=>user.id === id)
+export async function getUserById(id) {
+    return await fetch(new URL(`/users/${id}`, baseApi))
+        .then(response => response.json())
 }
 
-export function getUserByUsernameAndPassword(username, password) {
-    return users.find((user)=>user.pseudo.toLocaleLowerCase() === username.toLocaleLowerCase() && user.password === password)
+export async function userLogin(username, password) {
+    return await fetch(new URL('/login', baseApi), {
+        method: 'post',
+        headers: {
+            'content-type': 'application/json',
+            'accept': 'application/json'
+        },
+        body: JSON.stringify({
+            username,
+            password
+        })
+    })
+        .then(response => response.json())
+}
+
+export async function getUserByToken(token) {
+    return await fetch(new URL(`/users/current`, baseApi), {
+        headers: {
+            authorization: token
+        }
+    })
+        .then(response => response.json())
 }

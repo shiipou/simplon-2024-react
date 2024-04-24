@@ -1,8 +1,7 @@
-
-const baseApi = new URL('http://172.23.126.191:3000')
+import { baseApi } from "./_apiConfig"
 
 export async function getPostById(id) {
-    return await fetch(new URL(`/posts/${id}`, baseApi))
+    return await fetch(new URL(`/post/${id}`, baseApi))
         .then(response => response.json())
 }
 

@@ -1,17 +1,23 @@
 import { useNavigate } from "react-router-dom"
-import { getUserByUsernameAndPassword } from "../Services/userApi"
+import { userLogin } from "../Services/userApi"
+import { UserContext } from "../Providers/UserContext"
+import { useContext } from "react"
 
-export default function Login({ onLoginSucceed }) {
+export default function Login() {
+    const { setUserToken } = useContext(UserContext)
     const navigate = useNavigate()
-    function loginHandler(event) {
+
+    async function loginHandler(event) {
         event.preventDefault()
 
         const { username, password } = Object.fromEntries(new FormData(event.target))
 
-        const user = getUserByUsernameAndPassword(username, password)
-        if(user){
-            onLoginSucceed(user)
-            navigate('/')
+        if(username && password){
+            const user = await userLogin(username, password)
+            if(user){
+                setUserToken(user.token)
+                navigate('/')
+            }
         }
     }
 
