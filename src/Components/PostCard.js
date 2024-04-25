@@ -14,6 +14,7 @@ function handleLikeOnPost(state, action) {
 }
 
 export default function PostCard({id, owner, content}) {
+    // Permet de modifier un state par rapport au state précédent. (Incrémentationde l'état, déplacement d'un personnage d'un jeu 2d, ...)
     const [likeState, likeDispatch] = useReducer(handleLikeOnPost, { nb_like: 0 })
     const handleLike = useCallback(()=>{
         likeDispatch('increment')

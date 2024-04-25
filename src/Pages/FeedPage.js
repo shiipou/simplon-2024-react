@@ -15,8 +15,10 @@ export default function FeedPage() {
     const [selectedPostId, setSelectedPostId] = useState(null)
     const [selectedPost, setSelectedPost] = useState(null)
 
+    // Crée une nouvelle variable d'état "posts" pour l'application modifiable par l'appel de la fonction "setPosts".
     const [posts, setPosts] = useState([])
 
+    // Permet d'exécuter des requêtes en dehors de React (appel au DOM, appel a une API, résultat d'une Promise, ...)
     useEffect(()=>{
         let feedFetcher = getTrendingPost
         if(currentFeed === 'newest'){

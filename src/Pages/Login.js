@@ -7,11 +7,12 @@ export default function Login() {
     const userNameInput = useRef()
     const { setUserToken } = useContext(UserContext)
     const navigate = useNavigate()
-    
+
     useEffect(()=>{
         userNameInput.current.focus()
     }, [userNameInput])
 
+    // Permet de mettre en cache la fonction callback et de ne pas modifier le composant qui l'utilise et éviter de la redraw pour rien.
     const loginHandler = useCallback(async (event) => {
         event.preventDefault()
 

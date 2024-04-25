@@ -3,6 +3,7 @@ import PostCard from "./PostCard";
 
 export default function Feed({ feedType, feedContent, onPostSelect }) {
     
+    // Sauvegarde le résultat de la fonction dans la variable nb_posts et ne le recalcule pas tant que la dépendances n'est pas modifiée.
     const nb_posts = useMemo(() => {
         return feedContent.reduce((acc, _post) => {
             return acc+1
