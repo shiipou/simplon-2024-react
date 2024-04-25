@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useMemo, useState } from "react"
 import Feed from "../Components/Feed"
 import Navigation from "../Components/Navigation"
 import { getNewestPost, getPostById, getTrendingPost } from "../Services/postApi"
@@ -76,7 +76,7 @@ export default function FeedPage() {
                     setCurrentFeed("newest")
                 }}
             />
-            <Feed 
+            <Feed
                 feedType={currentFeed}
                 feedContent={posts}
                 onPostSelect={onPostSelect}/>

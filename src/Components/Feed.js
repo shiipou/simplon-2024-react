@@ -1,9 +1,17 @@
+import { useMemo } from "react";
 import PostCard from "./PostCard";
 
 export default function Feed({ feedType, feedContent, onPostSelect }) {
+    
+    const nb_posts = useMemo(() => {
+        return feedContent.reduce((acc, _post) => {
+            return acc+1
+        }, 0)
+    }, [feedContent])
+
     return (
         <div>
-            <h2>{feedType} feeds</h2>
+            <h2>{feedType} feeds ({nb_posts} posts)</h2>
             <div>
                 {
                     feedContent.map(post => (
