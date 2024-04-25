@@ -10,12 +10,12 @@ function App() {
   return (
     <div className="App">
       <UserContext.Provider value={{
-        userToken: userToken,
-        setUserToken: setUserToken
+        userToken,
+        setUserToken
       }}>
         <BrowserRouter>
             <Routes>
-              <Route path="/" element={<FeedPage/>} />
+              <Route path="/" element={<FeedPage />} />
               <Route path="/login" element={<Login/>} />
             </Routes>
           </BrowserRouter>
